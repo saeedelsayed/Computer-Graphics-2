@@ -1,0 +1,20 @@
+#version 330 compatibility
+
+layout(location=0) in vec3 in_position;
+layout(location=1) in vec4 bone_weights;
+layout(location=2) in vec4 bone_indices;
+
+out vec4 position;
+
+uniform bool skinned;
+uniform mat4 bone_matrices[50];
+
+void main(void)
+{
+	position = vec4(in_position, 1.0);
+
+	if(skinned)
+	{
+		/*Task 4.5: Implement skinning */
+	}
+}

@@ -1,0 +1,8 @@
+% allow for numerical gradients - set 'numeric' to true (you can do that in the GUI too)
+% to compare against your analytic gradients
+numeric_gradient[epsilon=0.0625;numeric=false](
+  difference(
+    sphere,
+    scale[sx=0.5;sy=0.5](cylinder)
+  )
+)

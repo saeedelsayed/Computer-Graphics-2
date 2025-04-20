@@ -1,0 +1,17 @@
+@=
+projectName="task1_implicits";
+projectType="application_plugin";
+projectGUID="88A9C4EB-5FAD-40c9-99DE-B9F7C7476777";
+addIncDirs=[INPUT_DIR];
+excludeSourceDirs=[INPUT_DIR."/examples"];
+addProjectDirs=[CGV_DIR."/plugins", CGV_DIR."/3rd", CGV_DIR."/libs"];
+addProjectDeps=[
+	"cgv_os", "cgv_utils", "cgv_type", "cgv_data", "cgv_base", "cgv_reflect", "cgv_math",
+	"cgv_signal", "cgv_gl", "cgv_media", "cgv_gui", "cgv_render","cgv_viewer", "cg_fltk",
+	"crg_stereo_view", "crg_grid", "crg_light", "annf"
+];
+addCommandLineArguments=[
+	'config:"'.INPUT_DIR.'/config.def"',
+	after("type(shader_config):shader_path='".CGV_DIR."/libs/cgv_gl/glsl'","cg_fltk")
+];
+workingDirectory = INPUT_DIR."/..";
