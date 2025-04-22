@@ -74,7 +74,7 @@ protected:
 	//           initialize this to "do not use custom quad" when constructing the
 	//           object.
 
-	// < your code here >
+	bool custom_quad; // true if we want to use custom tesselation, false otherwise
 
 	// [END] Task 0.1
 	//*********************************************************************************/
@@ -113,7 +113,7 @@ public:
 		  fb_resolution(512, 256), fb_invalid(true),
 		  texture("uint8[R,G,B,A]", cgv::render::TF_LINEAR, cgv::render::TF_LINEAR),
 		  fb_bgcolor_r(0.9f), fb_bgcolor_g(0.9f), fb_bgcolor_b(0.9f),
-		  bgcolor(fb_bgcolor_r, fb_bgcolor_g, fb_bgcolor_b), draw_backside(true), wireframe(false)
+		bgcolor(fb_bgcolor_r, fb_bgcolor_g, fb_bgcolor_b), draw_backside(true), wireframe(false), custom_quad(true)
 	{
 		// Make sure the font server knows about the fonts packaged with the exercise
 		cgv::scan_fonts("./data/Fonts");
@@ -150,7 +150,8 @@ public:
 			rh.reflect_member("fb_bgcolor_g", fb_bgcolor_g) &&
 			rh.reflect_member("fb_bgcolor_b", fb_bgcolor_b) &&
 			rh.reflect_member("wireframe", wireframe) &&
-			rh.reflect_member("draw_backside", draw_backside);
+			rh.reflect_member("draw_backside", draw_backside)&&
+			rh.reflect_member("custom_quad", custom_quad);
 	}
 
 	// Part of the cgv::base::base interface, should be implemented to respond to write
@@ -339,9 +340,7 @@ public:
 		//*****************************************************************************/
 		// Task 0.1: add a GUI control to switch between custom tesselation of the quad
 		//           and the one built into the cgv::render::context.
-
-		// < Your code here >
-
+		add_member_control(this, "custom quad", custom_quad);
 		// [END] Task 0.1
 		//*****************************************************************************/
 	}
@@ -492,8 +491,10 @@ public:
 		// Task 0.1: If enabled, render the quad with custom tesselation
 		//           instead of using tesselate_unit_square(). You can invoke
 		//           the method draw_my_unit_square() for this.
+		if(custom_quad)
+			draw_my_unit_square(ctx);
+		else
 			ctx.tesselate_unit_square();
-
 		//*********************************************************************/
 
 		// Draw back side
@@ -504,8 +505,12 @@ public:
 		// Task 0.1: If enabled, render the quad with custom tesselation
 		//           instead of using tesselate_unit_square(). Again, you
 		//           can invoke the method draw_my_unit_square() for this.
-			if (draw_backside)
+		if (draw_backside) {
+			if (custom_quad)
+				draw_my_unit_square(ctx);
+			else
 				ctx.tesselate_unit_square();
+			}
 
 		//*****************************************************************/
 		glPopAttrib();
